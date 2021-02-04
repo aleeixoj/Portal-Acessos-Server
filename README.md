@@ -12,6 +12,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Node.js](https://nodejs.org/en/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Knex](http://knexjs.org/)
+- [Express](https://expressjs.com/pt-br/)
 
 ## Projeto
 
