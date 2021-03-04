@@ -19,4 +19,4 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 Esse é o backend do sistema Portal Acessos onde faz todas as validações e requisições para garantir um controle de chamados mais prático e eficiente.
 
 Caso queira acessar o repositório do frontend segue o link abaixo:
-- [Portal Acessos WEB](https://https://github.com/theuncontrol/)
+- [Portal Acessos WEB](https://github.com/aleeixoj/Portal-Acessos-Frontend)
