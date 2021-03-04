@@ -1,18 +1,14 @@
 import { Request, Response } from 'express'
-import * as express from 'express'
-import * as cors from 'cors'
-import * as jwt from 'jsonwebtoken'
+require('dotenv').config()
+import jwt from 'jsonwebtoken'
 import { ActiveDirectory } from 'node-ad-tools'
 import ad from '../database/ad_db'
 import conexao_ad from '../conexao_ad'
 import db from '../database/conn'
-import * as log4js from 'log4js'
-import * as path from 'path'
+import log4js from 'log4js'
+import path from 'path'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-
-const acc = express.Router()
-acc.use(cors())
 const today = format(new Date(), 'yyyy-MM-dd', { locale: ptBR })
 const hour = format(new Date(), 'HH-mm-ss', { locale: ptBR })
 
@@ -62,9 +58,13 @@ export default {
         if (dados_user.groups[key] == 'AcessosUSR') {
           const sql = await db('users').where({ matricula: mat }).first()
           if (sql) {
-            const token = jwt.sign({ mat }, process.env.SECRET_KEY, {
-              expiresIn: 1440
-            })
+            const token = jwt.sign(
+              { mat },
+              '39037e3095f3328bd2e0ae5938fce30d',
+              {
+                expiresIn: 1440
+              }
+            )
             const logger = log4js.getLogger('default')
             logger.debug('Conectando ao sistema')
             logger.info(`Usuario ${mat} conectado com sucesso`)
@@ -75,6 +75,7 @@ export default {
                 .select('*')
                 .where({ MATRICULA_COMPLETA: mat })
                 .first()
+
               if (consulta) {
                 const createUserInTableUsers = await db('users').insert({
                   matricula: consulta.MATRICULA_COMPLETA,
@@ -84,6 +85,7 @@ export default {
                   email: consulta.SNOEMAIL,
                   cargo: consulta.CARGO,
                   group: consulta.SUBGRUPO,
+                  color: consulta.SUBGRUPO === 'V' ? 'gold' : 'purple',
                   created: new Date(),
                   lastModified: new Date()
                 })
@@ -92,9 +94,13 @@ export default {
                     super_id: 1,
                     user_id: createUserInTableUsers[0]
                   })
-                  const token = jwt.sign({ mat }, process.env.SECRET_KEY, {
-                    expiresIn: 1440
-                  })
+                  const token = jwt.sign(
+                    { mat },
+                    '39037e3095f3328bd2e0ae5938fce30d',
+                    {
+                      expiresIn: 1440
+                    }
+                  )
                   const logger = log4js.getLogger('default')
                   logger.debug('Conectando ao sistema')
                   logger.info(`Usuario ${mat} conectado com sucesso`)
@@ -118,9 +124,13 @@ export default {
         } else if (dados_user.groups[key] == 'AcessosADM') {
           const sql = await db('users').where({ matricula: mat }).first()
           if (sql) {
-            const token = jwt.sign({ mat }, process.env.SECRET_KEY, {
-              expiresIn: 1440
-            })
+            const token = jwt.sign(
+              { mat },
+              '39037e3095f3328bd2e0ae5938fce30d',
+              {
+                expiresIn: 1440
+              }
+            )
             const logger = log4js.getLogger('portal')
             logger.debug('Conectando ao sistema')
             logger.info(`Usuario ${mat} conectado com sucesso`)
@@ -140,6 +150,7 @@ export default {
                   email: consulta.SNOEMAIL,
                   cargo: consulta.CARGO,
                   group: consulta.SUBGRUPO,
+                  color: consulta.SUBGRUPO === 'V' ? 'gold' : 'purple',
                   created: new Date(),
                   lastModified: new Date()
                 })
@@ -148,9 +159,13 @@ export default {
                     super_id: 4,
                     user_id: createUserInTableUsers[0]
                   })
-                  const token = jwt.sign({ mat }, process.env.SECRET_KEY, {
-                    expiresIn: 1440
-                  })
+                  const token = jwt.sign(
+                    { mat },
+                    '39037e3095f3328bd2e0ae5938fce30d',
+                    {
+                      expiresIn: 1440
+                    }
+                  )
                   const logger = log4js.getLogger('default')
                   logger.debug('Conectando ao sistema')
                   logger.info(`Usuario ${mat} conectado com sucesso`)

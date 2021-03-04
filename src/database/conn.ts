@@ -1,13 +1,15 @@
-import * as knex from 'knex'
+import knex from 'knex'
 
+const toNumber: any = process.env.DB_ACESSOS_PORT
+const port = parseInt(toNumber)
 const db = knex({
   client: 'mysql',
   connection: {
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'root',
-    database: 'acessos'
+    host: process.env.DB_ACESSOS_HOST,
+    port,
+    user: process.env.DB_ACESSOS_USR,
+    password: process.env.DB_ACESSOS_PASS,
+    database: process.env.DB_ACESSOS
   },
   useNullAsDefault: true
 })

@@ -11,6 +11,7 @@ module.exports = {
       table.string('email').notNullable()
       table.string('cargo').notNullable()
       table.string('group').notNullable()
+      table.string('color').notNullable()
       table.date('created').notNullable()
       table.date('lastModified').notNullable()
     })

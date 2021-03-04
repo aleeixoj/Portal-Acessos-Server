@@ -1,10 +1,11 @@
-import * as nodemailer from 'nodemailer'
+const nodemailer = require('nodemailer')
+require('dotenv').config()
 
-const remetente = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: process.env.NODEMAILER_USER,
   service: '',
-  port: process.env.NODEMAILER_PORT,
+  port: 25,
   secure: false
 })
 
-export default remetente
+export default transporter

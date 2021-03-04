@@ -1,9 +1,6 @@
 import { Request, Response } from 'express'
-import * as express from 'express'
-import * as cors from 'cors'
 import path from 'path'
 import db from '../database/conn'
-const acc = express.Router()
 
 export default {
   async seven(request: Request, response: Response) {
@@ -44,7 +41,7 @@ export default {
       .count({ quantidade: 'sistema' })
       .groupBy('sistema')
       .orderBy('sistema', 'ASC')
-      .where('responsavel', '=', responsavel)
+      .where({ responsavel })
       .andWhere('created', '>', ourDate)
       .limit(4)
 
@@ -69,9 +66,35 @@ export default {
       .count({ quantidade: 'sistema' })
       .groupBy('sistema')
       .orderBy('sistema', 'ASC')
-      .where('responsavel', '=', responsavel)
+      .where({ responsavel })
       .andWhere('created', '>', ourDate)
       .limit(4)
+
+    if (call) {
+      return response.status(200).send(JSON.parse(JSON.stringify(call)))
+    } else {
+      return response.json({ status_message: 'Ocorreu um erro inesperado' })
+    }
+  },
+  async myData(request: Request, response: Response) {
+    const user = request.headers.authorization
+    const call = await db('chamados')
+      .select('*')
+      .where({ responsavel: user, status: 'Aberto' })
+      .orWhere({ responsavel: user, status: 'Reaberto' })
+      .orderByRaw('FIELD(color, "gold", "purple") ASC, created ASC')
+
+    if (call) {
+      return response.status(200).send(JSON.parse(JSON.stringify(call)))
+    } else {
+      return response.json({ status_message: 'Ocorreu um erro inesperado' })
+    }
+  },
+  async myDataClosed(request: Request, response: Response) {
+    const user = request.headers.authorization
+    const call = await db('chamados')
+      .select('*')
+      .where({ responsavel: user, status: 'Fechado' })
 
     if (call) {
       return response.status(200).send(JSON.parse(JSON.stringify(call)))

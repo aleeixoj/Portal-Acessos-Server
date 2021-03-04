@@ -1,13 +1,14 @@
-import * as knex from 'knex'
+import knex from 'knex'
+require('dotenv/config')
 
 const ad = knex({
   client: 'mssql',
   connection: {
-    host: process.env.AB_DB_HOST,
+    host: '10.238.176.65',
     // port: 3306,
-    user: process.env.AD_DB_USER,
-    password: process.env.AD_DB_PASS,
-    database: process.env.AD_DB
+    user: 'app_web',
+    password: 'Vivo*1515',
+    database: 'webpages'
   },
   useNullAsDefault: true
 })

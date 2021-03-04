@@ -1,7 +1,7 @@
 import { ActiveDirectory } from 'node-ad-tools'
 
 const config = {
-  url: process.env.AD_URL', // You can use DNS as well, like domain.local
+  url: process.env.AD_LDAP, // You can use DNS as well, like domain.local
   base: process.env.AD_BASE
 }
 
